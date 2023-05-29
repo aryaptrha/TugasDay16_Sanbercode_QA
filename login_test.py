@@ -20,6 +20,8 @@ class TestLogin(unittest.TestCase):
         time.sleep(1)
         browser.find_element(By.CSS_SELECTOR,".orangehrm-login-button[data-v-358db50f]").click() # klik login
         time.sleep(1)
+        wait = browser.find_element(By.XPATH,"/html/body/div/div[1]/div[1]/header/div[1]/div[1]/span/h6").text
+        self.assertEqual(wait,"Dashboard") # cek apakah berhasil login
 
     def test_a_failed_login_with_empty_password(self):
         browser = self.browser #buka web browser
