@@ -5,9 +5,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 
-
-
-
 class TestLogin(unittest.TestCase):
 
     def setUp(self): 
@@ -25,8 +22,9 @@ class TestLogin(unittest.TestCase):
         time.sleep(1)
         browser.find_element(By.CSS_SELECTOR,".orangehrm-login-button[data-v-358db50f]").click() # klik login
         time.sleep(1)
-        wait = browser.find_element(By.XPATH,"/html/body/div/div[1]/div[1]/header/div[1]/div[1]/span/h6").text
-        self.assertEqual(wait,"Dashboard") # cek apakah berhasil login
+
+        # verify
+        self.assertEqual(browser.current_url, "https://opensource-demo.orangehrmlive.com/web/index.php/dashboard/index") # cek url ke dashboard
 
     def test_a_failed_login_with_empty_password(self):
         browser = self.browser #buka web browser
@@ -37,6 +35,10 @@ class TestLogin(unittest.TestCase):
         browser.find_element(By.XPATH,"/html/body/div/div[1]/div/div[1]/div/div[2]/div[2]/form/div[2]/div/div[2]/input").send_keys("") # isi password
         time.sleep(1)
         browser.find_element(By.CSS_SELECTOR,".orangehrm-login-button[data-v-358db50f]").click() # klik login
+        time.sleep(1)
+
+        # verify
+        self.assertEqual(browser.current_url, "https://opensource-demo.orangehrmlive.com/web/index.php/auth/login") # cek url tetap di halaman login
 
     def test_a_failed_login_with_empty_username(self):
         browser = self.browser #buka web browser
@@ -48,6 +50,9 @@ class TestLogin(unittest.TestCase):
         time.sleep(1)
         browser.find_element(By.CSS_SELECTOR,".orangehrm-login-button[data-v-358db50f]").click() # klik login
 
+        # verify
+        self.assertEqual(browser.current_url, "https://opensource-demo.orangehrmlive.com/web/index.php/auth/login") # cek url tetap di halaman login
+
     def test_a_failed_login_with_empty_username_and_password(self):
         browser = self.browser #buka web browser
         browser.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login") # buka situs
@@ -57,6 +62,10 @@ class TestLogin(unittest.TestCase):
         browser.find_element(By.XPATH,"/html/body/div/div[1]/div/div[1]/div/div[2]/div[2]/form/div[2]/div/div[2]/input").send_keys("") # isi password
         time.sleep(1)
         browser.find_element(By.CSS_SELECTOR,".orangehrm-login-button[data-v-358db50f]").click() # klik login
+        time.sleep(1)
+
+        # verify
+        self.assertEqual(browser.current_url, "https://opensource-demo.orangehrmlive.com/web/index.php/auth/login") # cek url tetap di halaman login
 
     def tearDown(self):
         self.browser.quit()
