@@ -78,6 +78,22 @@ class TestLogin(unittest.TestCase):
         self.assertIn('Required', response_data_username)
         self.assertIn('Required', response_data_password)
 
+    def test_a_failed_login_with_wrong_username_and_password(self):
+        browser = self.browser #buka web browser
+        browser.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login") # buka situs
+        time.sleep(3)
+        browser.find_element(By.XPATH,"/html/body/div/div[1]/div/div[1]/div/div[2]/div[2]/form/div[1]/div/div[2]/input").send_keys("addminn") # isi username
+        time.sleep(1)
+        browser.find_element(By.XPATH,"/html/body/div/div[1]/div/div[1]/div/div[2]/div[2]/form/div[2]/div/div[2]/input").send_keys("321admmiinn") # isi password
+        time.sleep(1)
+        browser.find_element(By.CSS_SELECTOR,".orangehrm-login-button[data-v-358db50f]").click() # klik login
+        time.sleep(1)
+
+        # validasi
+        response_data = browser.find_element(By.XPATH,"/html/body/div/div[1]/div/div[1]/div/div[2]/div[2]/div/div[1]/div[1]/p").text
+
+        self.assertIn('Invalid credentials', response_data)
+
     def tearDown(self):
         self.browser.quit()
 
