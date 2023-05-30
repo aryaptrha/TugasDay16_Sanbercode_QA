@@ -23,7 +23,10 @@ class TestLogin(unittest.TestCase):
         browser.find_element(By.CSS_SELECTOR,".orangehrm-login-button[data-v-358db50f]").click() # klik login
         time.sleep(1)
 
-        # verify
+        # validasi
+        response_data = browser.find_element(By.XPATH,"/html/body/div/div[1]/div[1]/header/div[1]/div[1]/span/h6").text
+
+        self.assertIn('Dashboard', response_data)
         self.assertEqual(browser.current_url, "https://opensource-demo.orangehrmlive.com/web/index.php/dashboard/index") # cek url ke dashboard
 
     def test_a_failed_login_with_empty_password(self):
@@ -37,8 +40,10 @@ class TestLogin(unittest.TestCase):
         browser.find_element(By.CSS_SELECTOR,".orangehrm-login-button[data-v-358db50f]").click() # klik login
         time.sleep(1)
 
-        # verify
-        self.assertEqual(browser.current_url, "https://opensource-demo.orangehrmlive.com/web/index.php/auth/login") # cek url tetap di halaman login
+        # validasi
+        response_data_password = browser.find_element(By.XPATH,"/html/body/div/div[1]/div/div[1]/div/div[2]/div[2]/form/div[2]/div/span").text
+
+        self.assertIn('Required', response_data_password)
 
     def test_a_failed_login_with_empty_username(self):
         browser = self.browser #buka web browser
@@ -50,8 +55,10 @@ class TestLogin(unittest.TestCase):
         time.sleep(1)
         browser.find_element(By.CSS_SELECTOR,".orangehrm-login-button[data-v-358db50f]").click() # klik login
 
-        # verify
-        self.assertEqual(browser.current_url, "https://opensource-demo.orangehrmlive.com/web/index.php/auth/login") # cek url tetap di halaman login
+        # validasi
+        response_data_username = browser.find_element(By.XPATH,"/html/body/div/div[1]/div/div[1]/div/div[2]/div[2]/form/div[1]/div/span").text
+
+        self.assertIn('Required', response_data_username)
 
     def test_a_failed_login_with_empty_username_and_password(self):
         browser = self.browser #buka web browser
@@ -64,8 +71,12 @@ class TestLogin(unittest.TestCase):
         browser.find_element(By.CSS_SELECTOR,".orangehrm-login-button[data-v-358db50f]").click() # klik login
         time.sleep(1)
 
-        # verify
-        self.assertEqual(browser.current_url, "https://opensource-demo.orangehrmlive.com/web/index.php/auth/login") # cek url tetap di halaman login
+        # validasi
+        response_data_username = browser.find_element(By.XPATH,"/html/body/div/div[1]/div/div[1]/div/div[2]/div[2]/form/div[1]/div/span").text
+        response_data_password = browser.find_element(By.XPATH,"/html/body/div/div[1]/div/div[1]/div/div[2]/div[2]/form/div[2]/div/span").text
+
+        self.assertIn('Required', response_data_username)
+        self.assertIn('Required', response_data_password)
 
     def tearDown(self):
         self.browser.quit()

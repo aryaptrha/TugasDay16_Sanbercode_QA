@@ -27,7 +27,7 @@ class TestLogout(unittest.TestCase):
         browser.find_element(By.XPATH,"/html/body/div/div[1]/div[1]/header/div[1]/div[2]/ul/li/ul/li[4]/a").click() # klik logout
         time.sleep(3)
 
-        # verify
+        # validasi
         self.assertEqual(browser.current_url, "https://opensource-demo.orangehrmlive.com/web/index.php/auth/login") # cek url kembali ke halaman login
 
     def tearDown(self):
